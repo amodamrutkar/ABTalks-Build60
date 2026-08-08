@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    color-scheme: dark;
+    background-color: #05030D;
+    color: #F5F3FF;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Never let long text overflow the 390px viewport — only breaks when needed */
+  h1,
+  h2,
+  h3,
+  p {
+    overflow-wrap: break-word;
+  }
+
+  /* Custom Lenis Smooth Scroll Setup */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(15, 10, 31, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(24, 16, 48, 0.75) 0%, rgba(12, 8, 25, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.16);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.25);
+}
+
+.glass-pill {
+  background: rgba(139, 92, 246, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+}
+
+/* Loading / anti-gravity lock scroll */
+html.loading-lock,
+html.loading-lock body {
+  overflow: hidden;
+}
+
+/* Electric Violet -> Soft Indigo gradient wordmark */
+.wordmark-gradient {
+  background: linear-gradient(90deg, #c084fc 0%, #a855f7 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient text */
+.gradient-text-cyan,
+.gradient-text-purple {
+  background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 35%, #a855f7 70%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, #f5d0fe 0%, #d8b4fe 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Dark Grid Background */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.18) 0%, rgba(5, 3, 13, 0) 70%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #05030D;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1338;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* ==================== Mobile Viewport Optimizations (390px target) ==================== */
+
+/* Hard overflow guards so no element bleeds horizontally at 390px */
+html {
+  overflow-x: clip;
+}
+body {
+  overflow-x: clip;
+}
+img,
+svg,
+canvas,
+iframe,
+video {
+  max-width: 100%;
+}
+
+/* Anchor targets clear the fixed navbar on mobile */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* Tighter hero headline for very narrow phones */
+@media (max-width: 380px) {
+  .hero-headline {
+    font-size: 36px;
+  }
+}
+
+/* Mobile preview device scaling — transform is purely visual, so the iframe
+   inside keeps an exact 390x840 layout viewport while the frame visually
+   shrinks to fit common laptop screens. */
+.preview-device-scale {
+  --device-scale: 1;
+  transform: scale(var(--device-scale));
+  transform-origin: top center;
+  margin-bottom: calc((var(--device-scale) - 1) * 890px);
+  will-change: transform;
+}
+@media (max-height: 1000px) {
+  .preview-device-scale {
+    --device-scale: 0.9;
+  }
+}
+@media (max-height: 900px) {
+  .preview-device-scale {
+    --device-scale: 0.8;
+  }
+}
+@media (max-height: 800px) {
+  .preview-device-scale {
+    --device-scale: 0.7;
+  }
+}
+
+/* ==================== 390px Mobile Design Rules ==================== */
+
+/* 16-20px card radius on the primary mobile viewport */
+@media (max-width: 390px) {
+  .glass-card {
+    border-radius: 20px;
+  }
+}
+
+/* Remove tap-highlight delay on interactive elements */
+button,
+a {
+  touch-action: manipulation;
+}
+
+/* Hide scrollbars for single-row horizontally scrollable pickers */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
