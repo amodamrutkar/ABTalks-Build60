@@ -3,9 +3,9 @@ import { Github, Linkedin, Twitter, MessageSquare, ArrowUpRight } from 'lucide-r
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#030208] border-t border-purple-900/30 pt-12 pb-10 sm:pt-16 sm:pb-12 text-[#A8A3B8]">
+    <footer className="bg-[#030208] border-t border-purple-900/30 pt-10 pb-8 sm:pt-16 sm:pb-12 text-[#A8A3B8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 sm:gap-10 pb-12 border-b border-purple-900/30">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 pb-10 border-b border-purple-900/30">
           {/* Brand Info (Col 1 & 2) */}
           <div className="md:col-span-2 space-y-4">
             <a href="#" className="flex items-center gap-2.5">
@@ -59,34 +59,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider mb-4">
-              Navigation
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li><a href="#problem" className="hover:text-purple-300 transition-colors">Why 60 Days</a></li>
-              <li><a href="#journey" className="hover:text-purple-300 transition-colors">Journey Flow</a></li>
-              <li><a href="#why-us" className="hover:text-purple-300 transition-colors">Features</a></li>
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">Career Compass</a></li>
-              <li><a href="#social-proof" className="hover:text-purple-300 transition-colors">Wall of Fame</a></li>
-            </ul>
-          </div>
-
-          {/* Tracks */}
-          <div>
-            <h4 className="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider mb-4">
-              Tracks
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">AI Engineering</a></li>
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">Full Stack Web</a></li>
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">Mobile App Dev</a></li>
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">Cloud & DevOps</a></li>
-              <li><a href="#compass" className="hover:text-purple-300 transition-colors">Data Science</a></li>
-            </ul>
-          </div>
-
           {/* Legal & Support */}
           <div>
             <h4 className="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider mb-4">
@@ -103,7 +75,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div>
             &copy; {new Date().getFullYear()} ABTalks Dev Platform. All rights reserved.
           </div>

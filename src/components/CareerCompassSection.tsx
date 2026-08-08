@@ -1,11 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Compass, Bot, Globe, Smartphone, Cloud, BarChart3, CheckCircle, ArrowRight } from 'lucide-react';
-import { MagneticButton } from './ui/MagneticButton';
+import { Compass, Bot, Globe, Smartphone, Cloud, BarChart3, CheckCircle } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
-interface CareerCompassSectionProps {
-  onOpenModal: (track: string) => void;
-}
 
 interface TrackInfo {
   id: string;
@@ -78,12 +75,23 @@ const tracks: TrackInfo[] = [
   },
 ];
 
-export const CareerCompassSection: React.FC<CareerCompassSectionProps> = ({ onOpenModal }) => {
+export const CareerCompassSection: React.FC = () => {
   const [selectedTrackId, setSelectedTrackId] = useState('Full Stack');
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   const selectedTrack = tracks.find((t) => t.id === selectedTrackId) || tracks[1];
+
+  useScrollReveal(containerRef, {
+    title: [pillRef, titleRef],
+    description: descriptionRef,
+    content: [buttonsRef, timelineRef],
+  });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -111,20 +119,20 @@ export const CareerCompassSection: React.FC<CareerCompassSectionProps> = ({ onOp
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
+          <div ref={pillRef} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
             <Compass className="w-3.5 h-3.5 text-purple-400" />
             <span>Interactive Tool &bull; Career Compass</span>
           </div>
-          <h2 className="text-[28px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
+          <h2 ref={titleRef} className="text-[28px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
             Where do you want to be in <span className="gradient-text-purple">one year?</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#A8A3B8]">
+          <p ref={descriptionRef} className="mt-4 text-base sm:text-lg text-[#A8A3B8]">
             Select a career track below to reveal your custom 60-day roadmap and project milestones.
           </p>
         </div>
 
         {/* Interactive Track Buttons Row / Grid */}
-        <div className="no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-visible sm:flex-wrap sm:justify-center mb-6 sm:mb-12">
+        <div ref={buttonsRef} className="no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-visible sm:flex-wrap sm:justify-center mb-6 sm:mb-12">
           {tracks.map((track) => {
             const Icon = track.icon;
             const isSelected = track.id === selectedTrackId;
@@ -147,7 +155,7 @@ export const CareerCompassSection: React.FC<CareerCompassSectionProps> = ({ onOp
         </div>
 
         {/* Dynamic Timeline Container */}
-        <div className="glass-card rounded-3xl p-5 sm:p-10 border border-purple-900/30 shadow-2xl relative overflow-hidden bg-[#0F0A1F]/90">
+        <div ref={timelineRef} className="glass-card rounded-3xl p-5 sm:p-10 border border-purple-900/30 shadow-2xl relative overflow-hidden bg-[#0F0A1F]/90">
           <div className="flex flex-col md:flex-row md:items-center justify-between pb-8 border-b border-purple-900/30 mb-8 gap-4">
             <div>
               <div className="text-xs font-mono text-purple-300 uppercase tracking-wider mb-1">
@@ -158,14 +166,6 @@ export const CareerCompassSection: React.FC<CareerCompassSectionProps> = ({ onOp
               </h3>
               <p className="text-sm text-[#A8A3B8] mt-1">{selectedTrack.description}</p>
             </div>
-
-            <MagneticButton
-              onClick={() => onOpenModal(selectedTrack.name)}
-              className="w-full sm:w-auto min-h-[44px] px-6 py-3 text-sm shrink-0"
-            >
-              <span>Start My {selectedTrack.name} Journey</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </MagneticButton>
           </div>
 
           {/* Timeline View (4 Milestone Cards) */}

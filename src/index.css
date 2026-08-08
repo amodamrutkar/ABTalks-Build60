@@ -151,32 +151,6 @@ section[id] {
   }
 }
 
-/* Mobile preview device scaling — transform is purely visual, so the iframe
-   inside keeps an exact 390x840 layout viewport while the frame visually
-   shrinks to fit common laptop screens. */
-.preview-device-scale {
-  --device-scale: 1;
-  transform: scale(var(--device-scale));
-  transform-origin: top center;
-  margin-bottom: calc((var(--device-scale) - 1) * 890px);
-  will-change: transform;
-}
-@media (max-height: 1000px) {
-  .preview-device-scale {
-    --device-scale: 0.9;
-  }
-}
-@media (max-height: 900px) {
-  .preview-device-scale {
-    --device-scale: 0.8;
-  }
-}
-@media (max-height: 800px) {
-  .preview-device-scale {
-    --device-scale: 0.7;
-  }
-}
-
 /* ==================== 390px Mobile Design Rules ==================== */
 
 /* 16-20px card radius on the primary mobile viewport */
@@ -199,4 +173,35 @@ a {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Stationary soft light source on journey cards (top glow) */
+.journey-card-inner {
+  position: relative;
+}
+.journey-card-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 65% at 50% 0%,
+    rgba(168, 85, 247, 0.09),
+    rgba(34, 211, 238, 0.04) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Global transition language: consistent motion fallback for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

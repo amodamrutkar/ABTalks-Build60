@@ -1,9 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
 import { Flame, FolderGit2, Users, Eye, Sparkles } from 'lucide-react';
 import { TiltCard } from './ui/TiltCard';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const WhyLoveItSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useScrollReveal(sectionRef, {
+    title: [pillRef, titleRef],
+    description: descriptionRef,
+    content: cardRefs,
+  });
   const cards = [
     {
       icon: Flame,
@@ -40,21 +51,21 @@ export const WhyLoveItSection: React.FC = () => {
   ];
 
   return (
-    <section id="why-us" className="relative py-12 sm:py-24 bg-[#05030D] border-t border-purple-900/30 overflow-hidden">
+    <section ref={sectionRef} id="why-us" className="relative py-12 sm:py-24 bg-[#05030D] border-t border-purple-900/30 overflow-hidden">
       {/* Background Ambient Glows */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
+          <div ref={pillRef} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
             <span>Why Students Love ABTalks</span>
           </div>
-          <h2 className="text-[26px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
+          <h2 ref={titleRef} className="text-[26px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
             Engineered for <span className="gradient-text-purple">Maximum Impact</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-lg text-[#A8A3B8]">
+          <p ref={descriptionRef} className="mt-4 text-sm sm:text-lg text-[#A8A3B8]">
             Four pillars designed to eliminate burnout and propel you into your dream software engineering role.
           </p>
         </div>
@@ -65,16 +76,10 @@ export const WhyLoveItSection: React.FC = () => {
             const Icon = card.icon;
 
             return (
-              <motion.div
+              <div
                 key={card.title}
-                initial={{ opacity: 0, scale: 0.88, y: 25 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 200,
-                  damping: 18,
-                  delay: idx * 0.1,
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
                 }}
               >
                 <TiltCard maxTilt={8}>
@@ -111,7 +116,7 @@ export const WhyLoveItSection: React.FC = () => {
                     </div>
                   </div>
                 </TiltCard>
-              </motion.div>
+              </div>
             );
           })}
         </div>

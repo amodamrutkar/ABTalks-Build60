@@ -7,7 +7,6 @@ import { MotionConfig } from 'framer-motion';
 import { LoadingOverlay } from './components/LoadingOverlay';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { ProblemSection } from './components/ProblemSection';
 import { JourneySection } from './components/JourneySection';
 import { WhyLoveItSection } from './components/WhyLoveItSection';
 import { CareerCompassSection } from './components/CareerCompassSection';
@@ -86,17 +85,14 @@ export function App() {
         {/* Section 1: Hero */}
         <HeroSection reveal={loadingFinished} onOpenModal={() => handleOpenModal()} />
 
-        {/* Section 2: Problem & Emotional Contrast */}
-        <ProblemSection />
-
-        {/* Section 3: Signature Pinned Horizontal Scroll Journey */}
+        {/* Section 2: 60-Day Journey — continuous transition straight from the Hero */}
         <JourneySection />
 
         {/* Section 4: Why Students Love ABTalks */}
         <WhyLoveItSection />
 
         {/* Section 5: Career Compass */}
-        <CareerCompassSection onOpenModal={handleOpenModal} />
+        <CareerCompassSection />
 
         {/* Section 6: Social Proof & Rotated Card Deck */}
         <SocialProofSection />

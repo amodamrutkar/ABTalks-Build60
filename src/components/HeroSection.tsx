@@ -19,6 +19,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenModal, reveal = 
   const ctaSecondaryRef = useRef<HTMLAnchorElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const contentStackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!reveal) return;
@@ -287,6 +288,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenModal, reveal = 
     };
   }, []);
 
+  // Hero → Journey continuity: hero content subtly lifts and fades as the
+  // user scrolls away, dissolving directly into the 60-Day Journey section.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const stack = contentStackRef.current;
+    if (!section || !stack) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(stack, {
+        y: -70,
+        opacity: 0.4,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom 25%',
+          scrub: true,
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
   const stats = [
     { icon: Flame, title: '18K+ Students', sub: 'Active Daily Builders', iconBg: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
     { icon: Star, title: '4.9 Rating', sub: 'From 3,400+ Reviews', iconBg: 'bg-violet-500/10 text-violet-400 border-violet-500/20', isStar: true },
@@ -296,7 +322,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenModal, reveal = 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-12 sm:pt-28 sm:pb-16 overflow-hidden bg-[#05030D]"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-4 sm:pt-28 sm:pb-16 overflow-hidden bg-[#05030D]"
     >
       {/* Visual Background: grid + ambient glow + animated network, emerges dark & minimal */}
       <div ref={bgWrapRef} className="absolute inset-0 opacity-0 pointer-events-none will-change-transform">
@@ -307,7 +333,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenModal, reveal = 
 
       {/* Main Content Container — nudged above the vertical center line on mobile */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col justify-center items-center w-full -translate-y-10 sm:translate-y-0">
-        <div className="flex flex-col items-center w-full">
+        <div ref={contentStackRef} className="flex flex-col items-center w-full">
           {/* Announcement Pill */}
           <div
             ref={badgeRef}

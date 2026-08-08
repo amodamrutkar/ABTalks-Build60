@@ -69,6 +69,7 @@ const journeyCards: JourneyCard[] = [
 export const JourneySection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const lineFillRef = useRef<HTMLDivElement>(null);
   const bgGlowRef = useRef<HTMLDivElement>(null);
   const day1Ref = useRef<HTMLSpanElement>(null);
@@ -131,6 +132,16 @@ export const JourneySection: React.FC = () => {
         const upcoming = centers[i] > viewportCenter;
         const rise = upcoming ? (1 - eased) * 180 : 0;
         gsap.set(el, { scale: 0.92 + 0.08 * eased, opacity: 0.45 + 0.55 * eased, y: rise });
+
+        // Ambient glow on the active card (cyan/purple), stronger when focused
+        const inner = el.querySelector<HTMLElement>('.journey-card-inner');
+        if (inner) {
+          const glow = Math.max(0, (eased - 0.55) / 0.45);
+          gsap.set(inner, {
+            borderColor: `rgba(168, 85, 247, ${(0.22 + 0.35 * glow).toFixed(3)})`,
+            boxShadow: `0 0 ${(20 + 40 * glow).toFixed(1)}px -14px rgba(192, 132, 252, ${(0.22 * glow).toFixed(3)}), 0 0 ${(10 + 26 * glow).toFixed(1)}px -10px rgba(34, 211, 238, ${(0.16 * glow).toFixed(3)})`,
+          });
+        }
       });
 
       if (lineFillRef.current) {
@@ -175,10 +186,10 @@ export const JourneySection: React.FC = () => {
         ease: 'none',
         scrollTrigger: {
           trigger: section,
-          start: 'top top',
+          start: 'top top+=40',
           end: () => `+=${getScrollAmount()}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onRefresh: measure,
@@ -201,11 +212,48 @@ export const JourneySection: React.FC = () => {
     };
   }, [reducedMotion]);
 
+  // Journey entrance: merged into scroll progress so there is no dead zone —
+  // the heading and first card reveal continuously as the section rises and
+  // finish exactly at the pin position where the horizontal travel begins.
+  useEffect(() => {
+    if (reducedMotion) return;
+    const section = sectionRef.current;
+    const heading = headingRef.current;
+    if (!section || !heading) return;
+
+    const ctx = gsap.context(() => {
+      const card0 = cardRefs.current[0];
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 100%',
+          end: 'top top+=40',
+          scrub: 0.1,
+        },
+      });
+
+      tl.fromTo(
+        heading,
+        { opacity: 0, y: 24, scale: 0.985 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'power2.out' }
+      ).fromTo(
+        card0,
+        { opacity: 0, scale: 0.95, y: 20, filter: 'blur(4px)' },
+        { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out' },
+        0.7
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   if (reducedMotion) {
     return (
       <section
         id="journey"
-        className="relative py-16 sm:py-24 bg-[#05030D] overflow-hidden border-t border-purple-950/40"
+        className="relative py-16 sm:py-24 bg-[#05030D] overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
@@ -270,10 +318,13 @@ export const JourneySection: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] sm:w-[700px] sm:h-[700px] rounded-full bg-purple-900/30 blur-[120px]" />
       </div>
 
-      {/* Header — pt-20 on mobile clears the fixed navbar while the section is pinned */}
-      <div className="relative z-10 px-4 sm:px-8 pt-20 sm:pt-10">
+      {/* Header — pt-16 on mobile clears the fixed navbar while the section is pinned */}
+      <div className="relative z-10 px-4 sm:px-8 pt-28 sm:pt-16">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3">
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight">
+          <h2
+            ref={headingRef}
+            className="text-2xl sm:text-4xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight"
+          >
             The 60-Day <span className="gradient-text-purple">Journey Flow</span>
           </h2>
         </div>
@@ -296,7 +347,7 @@ export const JourneySection: React.FC = () => {
                 className="w-[82vw] max-w-[400px] sm:w-[400px] shrink-0 will-change-transform"
               >
                 <TiltCard>
-                  <div className="glass-card rounded-3xl p-5 sm:p-6 border border-purple-900/30 bg-[#0F0A1F]/80 h-[320px] sm:h-[360px] flex flex-col justify-between overflow-hidden">
+                  <div className="journey-card-inner glass-card rounded-3xl p-5 sm:p-6 border border-purple-900/30 bg-[#0F0A1F]/80 h-[300px] sm:h-[340px] flex flex-col justify-between overflow-hidden">
                     <div>
                       <div
                         className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${card.accent} flex items-center justify-center text-white shadow-lg`}
@@ -328,7 +379,7 @@ export const JourneySection: React.FC = () => {
       </div>
 
       {/* Progress line: Day 1 -> Day 60 */}
-      <div className="relative z-10 px-4 sm:px-8 pb-6 sm:pb-12">
+      <div className="relative z-10 px-4 sm:px-8 pb-14 sm:pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="relative mx-1">
             <div className="h-1 bg-purple-950/50 rounded-full overflow-hidden">

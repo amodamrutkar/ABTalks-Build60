@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronRight, ChevronLeft, Quote, Sparkles, Building2, CheckCircle2 } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface Testimonial {
   id: number;
@@ -63,6 +64,19 @@ const testimonials: Testimonial[] = [
 
 export const SocialProofSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const deckRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const metricsRef = useRef<HTMLDivElement>(null);
+
+  useScrollReveal(sectionRef, {
+    title: [pillRef, titleRef],
+    description: descriptionRef,
+    content: [deckRef, controlsRef, metricsRef],
+  });
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % testimonials.length);
@@ -73,27 +87,27 @@ export const SocialProofSection: React.FC = () => {
   };
 
   return (
-    <section id="social-proof" className="relative py-12 sm:py-28 bg-[#05030D] border-t border-purple-900/30 overflow-hidden">
+    <section ref={sectionRef} id="social-proof" className="relative py-12 sm:py-28 bg-[#05030D] border-t border-purple-900/30 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
+          <div ref={pillRef} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-purple-500/30 text-xs font-mono text-purple-300 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
             <span>Wall of Fame &bull; Proven Impact</span>
           </div>
-          <h2 className="text-[28px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
+          <h2 ref={titleRef} className="text-[28px] sm:text-5xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] tracking-tight leading-tight">
             Proven by <span className="gradient-text-purple">18,000+ Builders</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#A8A3B8]">
+          <p ref={descriptionRef} className="mt-4 text-base sm:text-lg text-[#A8A3B8]">
             Real developers who completed the 60-day challenge and transformed their career trajectory.
           </p>
         </div>
 
         {/* Stacked Rotated Card Deck Container */}
-        <div className="relative min-h-[380px] max-w-xl mx-auto flex items-center justify-center mb-12">
+        <div ref={deckRef} className="relative min-h-[380px] max-w-xl mx-auto flex items-center justify-center mb-12">
           {testimonials.map((item, idx) => {
             const offset = (idx - activeIndex + testimonials.length) % testimonials.length;
             const isTop = offset === 0;
@@ -162,7 +176,7 @@ export const SocialProofSection: React.FC = () => {
         </div>
 
         {/* Deck Navigation Controls */}
-        <div className="flex items-center justify-center gap-4 mb-8 sm:mb-16">
+        <div ref={controlsRef} className="flex items-center justify-center gap-4 mb-8 sm:mb-16">
           <button
             onClick={handlePrev}
             className="min-h-[44px] min-w-[44px] p-3 rounded-full bg-[#0F0A1F] border border-purple-900/40 text-slate-300 hover:text-purple-300 hover:border-purple-800/60 transition-colors"
@@ -183,7 +197,7 @@ export const SocialProofSection: React.FC = () => {
         </div>
 
         {/* Bottom Key Metrics Row */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-8 sm:pt-10 border-t border-purple-900/30 max-w-4xl mx-auto text-center">
+        <div ref={metricsRef} className="grid grid-cols-3 gap-2 sm:gap-4 pt-8 sm:pt-10 border-t border-purple-900/30 max-w-4xl mx-auto text-center">
           <div className="p-3 sm:p-4 rounded-2xl glass-card border border-purple-900/30">
             <div className="text-lg sm:text-3xl font-extrabold text-[#F5F3FF] font-['Plus_Jakarta_Sans'] gradient-text-purple">
               18,000+
