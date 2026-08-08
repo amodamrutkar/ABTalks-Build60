@@ -1,7 +1,7 @@
 export const USER = {
-  name: 'Siddhesh',
-  fullName: 'Siddhesh Pawar',
-  handle: '@siddhesh_dev',
+  name: 'Aarnv',
+  fullName: 'Aarnv Pawar',
+  handle: '@aarnv_dev',
   avatarEmoji: '😎',
   avatarGradient: 'linear-gradient(135deg, #FF8A4C, #FF5E6C)',
   location: 'Pune, India',
@@ -10,7 +10,6 @@ export const USER = {
 }
 
 export const QUOTES = [
-  'You are one commit away from extending your streak.',
   'Future recruiters are watching the timeline you build tonight.',
   'Consistency compounds. Show up tired, finish strong.',
   '60 small ships later, you will not recognise yourself.',
@@ -51,15 +50,18 @@ export const XP_TABLE = {
 }
 
 export const BADGES = [
-  { id: 'first-commit', name: 'First Commit', icon: '🌱', desc: 'Ship your first day', unlocked: true, day: 1 },
-  { id: 'streak-3', name: '3-Day Streak', icon: '🔥', desc: 'Three days in a row', unlocked: true, day: 3 },
-  { id: 'streak-7', name: '7-Day Streak', icon: '⚡', desc: 'A full week of shipping', unlocked: true, day: 7 },
-  { id: 'night-owl', name: 'Night Owl', icon: '🦉', desc: 'Ship after 10 PM', unlocked: true, day: 9 },
-  { id: 'streak-15', name: '15-Day Streak', icon: '🌋', desc: 'Halfway to a habit', unlocked: false, day: 15 },
-  { id: 'react-explorer', name: 'React Explorer', icon: '⚛️', desc: '5 React challenges', unlocked: false, day: 18 },
-  { id: 'api-master', name: 'API Master', icon: '🛰️', desc: '5 API challenges', unlocked: false, day: 25 },
-  { id: 'consistency-king', name: 'Consistency King', icon: '👑', desc: '30-day streak', unlocked: false, day: 30 },
-  { id: 'finisher', name: '60-Day Finisher', icon: '🏆', desc: 'Complete all 60 days', unlocked: false, day: 60 },
+  { id: 'first-commit', name: 'First Commit', icon: '🌱', desc: 'Ship your first challenge to GitHub.', howto: 'Complete and push Day 1 challenge before midnight.', rarity: 'rare', unlocked: true, day: 1 },
+  { id: 'streak-3', name: '3-Day Streak', icon: '🔥', desc: 'Three days of shipping in a row.', howto: 'Submit 3 consecutive daily challenges without breaking your streak.', rarity: 'rare', unlocked: true, day: 3 },
+  { id: 'streak-7', name: '7-Day Streak', icon: '⚡', desc: 'A full week of shipping.', howto: 'Keep your streak alive for 7 straight days.', rarity: 'epic', unlocked: true, day: 7 },
+  { id: 'night-owl', name: 'Night Owl', icon: '🦉', desc: 'Shipped after 10 PM.', howto: 'Submit any challenge between 10 PM and 4 AM.', rarity: 'epic', unlocked: true, day: 9 },
+  { id: 'streak-15', name: '15-Day Streak', icon: '🌋', desc: 'Halfway to a habit.', howto: 'Maintain your streak for 15 consecutive days.', rarity: 'epic', unlocked: false, day: 15 },
+  { id: 'react-explorer', name: 'React Explorer', icon: '⚛️', desc: '5 React challenges shipped.', howto: 'Complete 5 challenges from the React track.', rarity: 'epic', unlocked: false, day: 18 },
+  { id: 'api-master', name: 'API Master', icon: '🛰️', desc: '5 API challenges shipped.', howto: 'Complete 5 challenges from the API track.', rarity: 'legendary', unlocked: false, day: 25 },
+  { id: 'consistency-king', name: 'Consistency King', icon: '👑', desc: 'A month of non-stop shipping.', howto: 'Reach a 30-day streak.', rarity: 'legendary', unlocked: false, day: 30 },
+  { id: 'finisher', name: '60-Day Finisher', icon: '🏆', desc: 'Complete the full ABTalks 60 journey.', howto: 'Ship all 60 daily challenges.', rarity: 'mythic', unlocked: false, day: 60 },
+  { id: 'bug-bash', name: 'Bug Bash', icon: '🐛', desc: 'Ship 3 challenges during the Bug Bash weekend.', howto: 'Submit any 3 challenges while the Bug Bash event is live.', rarity: 'epic', unlocked: false, day: 0, event: true, eventEnds: 'Aug 16' },
+  { id: 'moon-marathon', name: 'Moonlight Marathon', icon: '🌙', desc: 'Ship 5 nights in a row during the Moonlight Marathon.', howto: 'Submit a challenge every night while the event is live.', rarity: 'legendary', unlocked: false, day: 0, event: true, eventEnds: 'Aug 31' },
+  { id: 'ghost-ship', name: 'Ghost Ship', icon: '👻', desc: 'Complete a challenge on Halloween night.', howto: 'Submit any challenge on Oct 31 between 6 PM and midnight.', rarity: 'mythic', unlocked: false, day: 0, event: true, eventEnds: 'Oct 31' },
 ]
 
 export const COMMUNITY = {
@@ -73,6 +75,68 @@ export const COMMUNITY = {
   ],
   weeklyChallenge: { active: true, title: 'Ping-Pong Multiplayer', submissions: 486, endsIn: '3d 4h' },
 }
+
+const LB_POOL = {
+  India: { flag: '🇮🇳', first: ['Vivaan', 'Diya', 'Rohan', 'Myra', 'Kabir', 'Naina', 'Arjun', 'Saanvi', 'Dev', 'Riya'], last: ['Patel', 'Iyer', 'Reddy', 'Kapoor', 'Singh', 'Verma', 'Nair', 'Joshi', 'Gupta', 'Desai'] },
+  USA: { flag: '🇺🇸', first: ['Ethan', 'Ava', 'Mason', 'Mia', 'Logan', 'Ella', 'Ryan', 'Grace', 'Dylan', 'Chloe'], last: ['Smith', 'Johnson', 'Davis', 'Miller', 'Taylor', 'Anderson', 'Thomas', 'Moore', 'Clark', 'Lewis'] },
+  UK: { flag: '🇬🇧', first: ['Oliver', 'Amelia', 'Harry', 'Poppy', 'George', 'Isla', 'Arthur', 'Freya', 'Jack', 'Rose'], last: ['Watson', 'Clarke', 'Bennett', 'Hughes', 'Parker', 'Mitchell', 'Turner', 'Cooper', 'Edwards', 'Morgan'] },
+  Japan: { flag: '🇯🇵', first: ['Haruto', 'Sakura', 'Ren', 'Aoi', 'Sora', 'Hinata', 'Kaito', 'Mei', 'Daiki', 'Emi'], last: ['Sato', 'Suzuki', 'Takahashi', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato', 'Inoue'] },
+  Germany: { flag: '🇩🇪', first: ['Lena', 'Finn', 'Mia', 'Elias', 'Jonas', 'Clara', 'Leon', 'Hanna', 'Felix', 'Paul'], last: ['Schmidt', 'Weber', 'Wagner', 'Fischer', 'Hoffmann', 'Koch', 'Richter', 'Klein', 'Wolf', 'Neumann'] },
+  UAE: { flag: '🇦🇪', first: ['Omar', 'Layla', 'Zayed', 'Fatima', 'Hamad', 'Sara', 'Rashid', 'Noor', 'Khalid', 'Mariam'], last: ['Al-Farsi', 'Al-Mansouri', 'Haddad', 'Rahman', 'Sharif', 'Aziz', 'Qadir', 'Nasser', 'Hakim', 'Sultan'] },
+  Mexico: { flag: '🇲🇽', first: ['Sofia', 'Mateo', 'Valentina', 'Santiago', 'Camila', 'Alejandro', 'Lucia', 'Emilio', 'Renata', 'Iker'], last: ['Hernandez', 'Garcia', 'Martinez', 'Lopez', 'Gonzalez', 'Perez', 'Rodriguez', 'Sanchez', 'Torres', 'Flores'] },
+  'South Korea': { flag: '🇰🇷', first: ['Min-jun', 'Seo-yeon', 'Ji-ho', 'Soo-ah', 'Jun-ho', 'Ye-jin', 'Dong-hyun', 'Hye-jin', 'Sang-wook', 'Jin-woo'], last: ['Kim', 'Lee', 'Park', 'Choi', 'Jung', 'Kang', 'Cho', 'Yoon', 'Jang', 'Lim'] },
+  Brazil: { flag: '🇧🇷', first: ['Alice', 'Gabriel', 'Laura', 'Pedro', 'Beatriz', 'Rafael', 'Marina', 'Thiago', 'Camila', 'Gustavo'], last: ['Santos', 'Oliveira', 'Souza', 'Costa', 'Pereira', 'Almeida', 'Ferreira', 'Rodrigues', 'Gomes', 'Lima'] },
+  Australia: { flag: '🇦🇺', first: ['Jack', 'Charlotte', 'Ruby', 'Ethan', 'Matilda', 'Lachlan', 'Zoe', 'Cooper', 'Harper', 'Mackenzie'], last: ['Wilson', 'Thompson', 'Walker', 'Harris', 'Martin', 'White', 'Hall', 'Green', 'Baker', 'Adams'] },
+  Poland: { flag: '🇵🇱', first: ['Zuzanna', 'Jakub', 'Aleksandra', 'Michal', 'Julia', 'Kacper', 'Natalia', 'Piotr', 'Wiktoria', 'Tomasz'], last: ['Kowalski', 'Wozniak', 'Kowalczyk', 'Kaminski', 'Lewandowski', 'Zielinski', 'Szymanski', 'Wojcik', 'Duda', 'Mazur'] },
+}
+
+const LB_AVATARS = ['🦊', '🐼', '🐯', '🦁', '🐺', '🐨', '🐸', '🦜', '🐱', '🐳', '🦩', '🦔', '🐰', '🦉', '🐙', '🦚', '🦢', '🐢', '🦋', '🐿️']
+const LB_PROJECTS = ['Realtime Chat App', 'AI Flashcard App', 'DevBoard SaaS', 'Task Tracker CLI', 'Weather API App', 'Portfolio 3D', 'Blog CMS', 'Kanban Board', 'Music Player', 'Fitness Tracker', 'URL Shortener', 'E-commerce UI', 'Auth Boilerplate', 'Markdown Editor', 'Quiz Game', 'Pomodoro App', 'Expense Tracker', 'Landing Page', 'News App', 'Recipe Finder']
+
+const LB_FEATURED = [
+  { name: 'Aarav Mehta', avatar: '🦁', country: 'India', flag: '🇮🇳', xp: 4120, streak: 18, achievements: 14, project: 'AI Flashcard App' },
+  { name: 'Sophia Chen', avatar: '🦊', country: 'USA', flag: '🇺🇸', xp: 3890, streak: 15, achievements: 12, project: 'Realtime Collab Editor' },
+  { name: 'Liam Carter', avatar: '🐺', country: 'UK', flag: '🇬🇧', xp: 3560, streak: 14, achievements: 11, project: 'DevBoard SaaS' },
+  { name: 'Yuki Tanaka', avatar: '🐼', country: 'Japan', flag: '🇯🇵', xp: 3410, streak: 12, achievements: 13, project: 'Task Tracker CLI' },
+  { name: 'Priya Sharma', avatar: '🐯', country: 'India', flag: '🇮🇳', xp: 3280, streak: 11, achievements: 10, project: 'E-commerce UI' },
+  { name: 'Emma Wilson', avatar: '🐰', country: 'USA', flag: '🇺🇸', xp: 3140, streak: 10, achievements: 12, project: 'Weather API App' },
+  { name: 'Noah Becker', avatar: '🐨', country: 'Germany', flag: '🇩🇪', xp: 2990, streak: 13, achievements: 9, project: 'Auth Boilerplate' },
+  { name: 'Aisha Khan', avatar: '🦜', country: 'UAE', flag: '🇦🇪', xp: 2870, streak: 9, achievements: 11, project: 'Portfolio 3D' },
+  { name: 'Diego Ramirez', avatar: '🐸', country: 'Mexico', flag: '🇲🇽', xp: 2760, streak: 8, achievements: 10, project: 'Blog CMS' },
+  { name: 'Aarnv', avatar: '🦉', country: 'India', flag: '🇮🇳', xp: 2200, streak: 11, achievements: 7, project: 'Realtime Chat App', me: true },
+  { name: 'Hana Kim', avatar: '🐱', country: 'South Korea', flag: '🇰🇷', xp: 2180, streak: 7, achievements: 9, project: 'Kanban Board' },
+  { name: 'Lucas Silva', avatar: '🦩', country: 'Brazil', flag: '🇧🇷', xp: 2050, streak: 6, achievements: 8, project: 'Music Player' },
+  { name: 'Olivia Brown', avatar: '🐳', country: 'Australia', flag: '🇦🇺', xp: 1940, streak: 5, achievements: 7, project: 'Fitness Tracker' },
+  { name: 'Adam Nowak', avatar: '🦔', country: 'Poland', flag: '🇵🇱', xp: 1820, streak: 4, achievements: 8, project: 'URL Shortener' },
+]
+
+export const LEADERBOARD = (() => {
+  const rows = [...LB_FEATURED]
+  const used = new Set(rows.map((p) => p.name))
+  for (const [country, pool] of Object.entries(LB_POOL)) {
+    const have = rows.filter((p) => p.country === country).length
+    for (let i = 0; i < Math.max(0, 5 - have); i++) {
+      let name = ''
+      let guard = 0
+      do {
+        name = `${pool.first[(i + guard) % pool.first.length]} ${pool.last[Math.floor((i + guard) / pool.first.length) % pool.last.length]}`
+        guard++
+      } while (used.has(name))
+      used.add(name)
+      rows.push({
+        name,
+        avatar: LB_AVATARS[(rows.length * 3 + i) % LB_AVATARS.length],
+        country,
+        flag: pool.flag,
+        xp: 2650 - i * 220 - (rows.length % 7) * 15,
+        streak: 4 + ((rows.length * 7 + i) % 14),
+        achievements: 4 + ((rows.length * 5 + i) % 11),
+        project: LB_PROJECTS[(rows.length + i) % LB_PROJECTS.length],
+      })
+    }
+  }
+  return rows
+})()
 
 export const PORTFOLIO = {
   score: 72,
@@ -106,15 +170,16 @@ export function buildCalendar() {
       10: 'News API Fetcher',
       11: 'Quiz App',
       12: 'Build a Weather Dashboard',
+      23: 'Realtime Chat App',
     }
     days.push({
       day,
       title: titles[day] || `Day ${day} Challenge`,
       completed: day <= 11,
       submitted: day <= 11,
-      github: day <= 11 ? `github.com/siddhesh-dev/day-${day}` : null,
-      linkedin: day <= 11 ? `linkedin.com/in/siddhesh/day-${day}` : null,
-      date: `Aug ${6 + (i % 30)}`,
+      github: day <= 11 ? `github.com/aarnv-dev/day-${day}` : null,
+      linkedin: day <= 11 ? `linkedin.com/in/aarnv/day-${day}` : null,
+      date: `Aug ${i + 1}`,
       xp: day <= 11 ? 100 + (day % 3) * 25 : 0,
     })
   }
@@ -133,38 +198,22 @@ export const SCENES = {
     portfolio: { ...PORTFOLIO },
     reminder: { type: 'due', label: 'Expires in 4h 12m' },
   },
-  'day-1': {
-    label: 'Day 1 · First day',
-    user: { ...USER },
-    streak: { current: 0, longest: 0, isActive: false, missedYesterday: false, firstDay: true },
-    today: { ...TODAY_TASK, day: 1, title: 'Setup & First Commit', category: 'Git · Basics', difficulty: 'Easy', time: '20 min', tech: ['Git', 'GitHub'], status: 'pending' },
-    calendar: buildCalendar().map((d) => ({ ...d, completed: false })),
-    completedDays: 0,
-    xp: { total: 0, level: 1 },
-    portfolio: { ...PORTFOLIO, score: 12, breakdown: [...PORTFOLIO.breakdown.map((b) => ({ ...b, value: b.value === 80 ? 0 : 0 }))], tips: ['Your score starts the moment you ship Day 1', 'A LinkedIn post + GitHub commit = instant boost', 'Consistency builds 80% of your score'] },
-    reminder: { type: 'start', label: 'Your journey starts today' },
-  },
   missed: {
-    label: 'Missed a day',
+    label: 'Missed days',
     user: { ...USER },
-    streak: { current: 4, longest: 18, isActive: false, missedYesterday: true },
-    today: { ...TODAY_TASK, status: 'pending' },
-    calendar: buildCalendar().map((d) => (d.day === 11 ? { ...d, completed: false, submitted: false } : d)),
-    completedDays: 10,
-    xp: { total: 700, level: 4 },
-    portfolio: { ...PORTFOLIO, score: 58, tips: ['Missed Day 11 — finish today and your comeback counts for +25 XP', 'A streak is not the score. Consistency over 60 days is.', 'Post today, even a small win, to rebuild momentum'] },
-    reminder: { type: 'comeback', label: 'Comeback mode · 1 missed day' },
-  },
-  complete: {
-    label: 'Day 12 · Completed',
-    user: { ...USER },
-    streak: { current: 12, longest: 18, isActive: true, missedYesterday: false, todayDone: true },
-    today: { ...TODAY_TASK, status: 'submitted' },
-    calendar: buildCalendar().map((d) => (d.day === 12 ? { ...d, completed: true, submitted: true, github: 'github.com/siddhesh-dev/day-12', linkedin: 'linkedin.com/in/siddhesh/day-12' } : d)),
-    completedDays: 12,
-    xp: { total: 975, level: 5 },
-    portfolio: { ...PORTFOLIO, score: 76 },
-    reminder: { type: 'done', label: 'Great work! Come back tomorrow for Day 13' },
+    streak: { current: 11, longest: 18, isActive: true, missedYesterday: false, missedCount: 4 },
+    today: { ...TODAY_TASK, day: 23, title: 'Realtime Chat App', category: 'Full-Stack · WebSockets', time: '60 min', tech: ['Socket.IO', 'React'], status: 'submitted' },
+    calendar: buildCalendar().map((d) => {
+      if (d.day >= 9 && d.day <= 12)
+        return { ...d, completed: false, submitted: false, missed: true, github: null, linkedin: null, xp: 0 }
+      if (d.day >= 13 && d.day <= 23)
+        return { ...d, completed: true, submitted: true, github: `github.com/aarnv-dev/day-${d.day}`, linkedin: `linkedin.com/in/aarnv/day-${d.day}`, xp: 100 + (d.day % 3) * 25 }
+      return d
+    }),
+    completedDays: 19,
+    xp: { total: 2200, level: 9 },
+    portfolio: { ...PORTFOLIO, score: 64, tips: ['You missed 4 days but came back — that is what consistency looks like', 'Keep the 11-day streak alive, one ship at a time', 'Post today, even a small win, to rebuild momentum'] },
+    reminder: { type: 'done', label: 'Back on track — 11-day streak. Keep it alive tomorrow!' },
   },
 }
 

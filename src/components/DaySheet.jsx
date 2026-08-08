@@ -23,7 +23,7 @@ export default function DaySheet({ day, onClose }) {
         Day {day.day} · {day.title}
       </div>
       <div className="sheet-date">
-        {day.date} · {day.completed ? 'Shipped' : 'Not submitted'}
+        {day.date} · {day.missed ? 'Missed' : day.completed ? 'Shipped' : 'Not submitted'}
       </div>
 
       {day.github && (
@@ -47,7 +47,17 @@ export default function DaySheet({ day, onClose }) {
         </div>
       )}
 
-      {day.completed ? (
+      {day.missed ? (
+        <div className="sheet-missed">
+          <span className="sm-ic"><X size={14} strokeWidth={3} /></span>
+          <div>
+            <b>Missed Day {day.day}</b>
+            <p>
+              {day.title} wasn't shipped. Finish today and bank a +25 XP comeback bonus.
+            </p>
+          </div>
+        </div>
+      ) : day.completed ? (
         <div className="sheet-xp">+{day.xp} XP earned</div>
       ) : (
         <p style={{ fontSize: 12, color: 'var(--text-faint)', marginTop: 10 }}>

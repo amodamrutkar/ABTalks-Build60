@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Home, BarChart3, ListChecks, Award, User } from 'lucide-react'
+import { Home, LayoutDashboard, ListChecks, Award } from 'lucide-react'
 
 const ITEMS = [
   { id: 'home', label: 'Home', Icon: Home },
-  { id: 'progress', label: 'Progress', Icon: BarChart3 },
+  { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
   { id: 'challenges', label: 'Challenges', Icon: ListChecks },
   { id: 'achievements', label: 'Achievements', Icon: Award },
-  { id: 'profile', label: 'Profile', Icon: User },
 ]
 
-export default function BottomNav({ active = 'home' }) {
+export default function BottomNav({ active = 'dashboard' }) {
   const [current, setCurrent] = useState(active)
 
   return (

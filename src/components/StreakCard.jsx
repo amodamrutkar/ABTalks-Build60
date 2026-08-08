@@ -33,6 +33,8 @@ export default function StreakCard({ s, day }) {
             <span className="live-dot" style={{ width: 7, height: 7 }} />
             Streak active
           </span>
+        ) : s.missedCount ? (
+          <span className="streak-chip missed-chip">😤 {s.missedCount} days missed</span>
         ) : s.missedYesterday ? (
           <span className="streak-chip" style={{ color: '#e0c8ff', background: 'rgba(167,139,250,0.15)', borderColor: 'rgba(167,139,250,0.35)' }}>
             💜 Comeback mode
@@ -46,6 +48,11 @@ export default function StreakCard({ s, day }) {
         <span className="streak-number">{s.current}</span>
         <span className="streak-unit">{s.firstDay ? 'days so far' : s.current === 1 ? 'day streak' : 'day streak'}</span>
       </div>
+      {s.missedCount && (
+        <p className="missed-msg">
+          Back on track — {s.missedCount} missed days, then you rebuilt it. Keep the streak alive. 💜
+        </p>
+      )}
       {s.firstDay && (
         <p style={{ fontSize: 12.5, color: 'var(--text-dim)', marginTop: 6 }}>
           No streak yet — every champion starts here. Ship Day 1 and make it official. 🚀

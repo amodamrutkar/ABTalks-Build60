@@ -33,7 +33,7 @@ export default function Reminder({ r, s }) {
   if (r.type === 'done') {
     return (
       <motion.div className="reminder done" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="reminder-icon"><PartyPopper size={18} color="#31e0a6" /></div>
+        <div className="reminder-icon"><PartyPopper size={18} color="#22d3ee" /></div>
         <div className="reminder-body">
           <div className="reminder-title">{r.label}</div>
           <div className="reminder-sub">+150 XP banked · comeback tomorrow, same time 🔥</div>
@@ -57,7 +57,7 @@ export default function Reminder({ r, s }) {
   if (r.type === 'start') {
     return (
       <motion.div className="reminder" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="reminder-icon"><Flag size={18} color="#ffcf5c" /></div>
+        <div className="reminder-icon"><Flag size={18} color="#22d3ee" /></div>
         <div className="reminder-body">
           <div className="reminder-title">Your 60-day journey starts today</div>
           <div className="reminder-sub">Commit on GitHub + post on LinkedIn. That's it. You've got this.</div>
@@ -68,7 +68,7 @@ export default function Reminder({ r, s }) {
 
   return (
     <motion.div className="reminder due" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-      <div className="reminder-icon"><TimerReset size={18} color="#ff8a4c" /></div>
+      <div className="reminder-icon"><TimerReset size={18} color="#8b5cf6" /></div>
       <div className="reminder-body">
         <div className="reminder-title">Today's challenge expires tonight</div>
         <div className="reminder-sub">Day {s.current + 1} resets at 12:00 AM IST</div>

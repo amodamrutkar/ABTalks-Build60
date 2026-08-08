@@ -13,6 +13,7 @@ import Portfolio from './components/Portfolio'
 import Community from './components/Community'
 import BottomNav from './components/BottomNav'
 import DaySheet from './components/DaySheet'
+import Tilt3D from './components/Tilt3D'
 import { SCENES, QUOTES, COMMUNITY } from './data/mockData'
 
 export default function App() {
@@ -121,26 +122,44 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.28 }}
         >
-          <StreakCard s={scene.streak} day={scene.today.day} />
+          <Tilt3D>
+            <StreakCard s={scene.streak} day={scene.today.day} />
+          </Tilt3D>
         </motion.div>
 
-        <Reminder r={scene.reminder} s={scene.streak} />
+        <Tilt3D>
+          <Reminder r={scene.reminder} s={scene.streak} />
+        </Tilt3D>
 
-        <div className="dashboard-grid" style={{ display: 'grid', gap: 16 }}>
-          <TodayTask task={scene.today} streak={scene.streak} {...handlers} />
-          <OverallProgress completed={scene.completedDays} total={60} today={scene.today.day} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <Tilt3D>
+            <TodayTask task={scene.today} streak={scene.streak} {...handlers} />
+          </Tilt3D>
+          <Tilt3D>
+            <OverallProgress completed={scene.completedDays} total={60} today={scene.today.day} />
+          </Tilt3D>
         </div>
 
-        <Calendar days={scene.calendar} onOpen={handlers.onSheetOpen} />
+        <Tilt3D>
+          <Calendar days={scene.calendar} onOpen={handlers.onSheetOpen} today={scene.today.day} />
+        </Tilt3D>
 
-        <XpCard xp={scene.xp} s={scene.streak} streak={scene.streak} />
+        <Tilt3D>
+          <XpCard xp={scene.xp} s={scene.streak} streak={scene.streak} />
+        </Tilt3D>
 
         <div className="dashboard-grid" style={{ display: 'grid', gap: 16 }}>
-          <Badges />
-          <Portfolio p={scene.portfolio} />
+          <Tilt3D>
+            <Badges />
+          </Tilt3D>
+          <Tilt3D>
+            <Portfolio p={scene.portfolio} />
+          </Tilt3D>
         </div>
 
-        <Community c={COMMUNITY} rank={scene.streak.firstDay ? null : COMMUNITY_RANK} />
+        <Tilt3D>
+          <Community c={COMMUNITY} rank={scene.streak.firstDay ? null : COMMUNITY_RANK} />
+        </Tilt3D>
 
         <motion.p
           style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-faint)', paddingTop: 4 }}
