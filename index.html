@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#070D0B" />
-  <title>ABTalks 60 — Ship Every Day</title>
+  <meta name="theme-color" content="#05030D" />
+  <title>ABTalks — Ship Every Day</title>
   <style>
-    html { background: #070D0B; }
+    html { background: #05030D; }
     body { margin: 0; }
     #app { min-height: 100vh; }
     .boot { display: flex; align-items: center; justify-content: center; padding-top: 40vh; }
-    .boot .ring { padding: 3px 14px; color: #FF9B45; font: 13px/1.6 ui-monospace, monospace; }
-    .boot .err { display: block; margin-top: 12px; color: #FF6B63; font: 12px/1.5 ui-monospace, monospace; max-width: 340px; }
-    .boot a { color: #FF9B45; }
+    .boot .ring { padding: 3px 14px; color: #8B5CF6; font: 13px/1.6 ui-monospace, monospace; }
+    .boot .err { display: block; margin-top: 12px; color: #E879F9; font: 12px/1.5 ui-monospace, monospace; max-width: 340px; }
+    .boot a { color: #8B5CF6; }
   </style>
   <script>
     /* boot watchdog: must be registered before any app script so a hung
@@ -21,7 +21,7 @@
       var app = document.getElementById('app');
       function fail(msg) {
         if (!app) return;
-        app.innerHTML = '<div class="boot"><div><span class="ring">ABTalks 60 — ' + msg + '</span>' +
+        app.innerHTML = '<div class="boot"><div><span class="ring">ABTalks — ' + msg + '</span>' +
           '<span class="err">Something failed to load. <a href="/" onclick="location.reload()">Tap enter here</a> to retry.</span></div></div>';
       }
       window.addEventListener('error', function (e) {
@@ -35,11 +35,11 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div id="app"><div class="boot"><span class="ring">ABTalks 60 — loading…</span></div></div>
+  <div id="app"><div class="boot"><span class="ring">ABTalks — loading…</span></div></div>
   <div id="toast" class="toast" role="status"></div>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>

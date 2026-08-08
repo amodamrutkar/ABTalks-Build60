@@ -36,7 +36,7 @@
   function header(title, right) {
     return `<header class="app-header">
       <button class="back" data-back aria-label="Back">${ICONS.back}</button>
-      <div class="brand">AB<b>Talks</b> 60<div class="brand-sub">${title}</div></div>
+      <div class="brand">AB<b>Talks</b><div class="brand-sub">${title}</div></div>
       <div class="spacer"></div>
       ${right || ''}
     </header>`;
@@ -117,6 +117,7 @@
     if (typeof html !== 'string' || !html.length) throw new Error('blank route');
     $('#app').innerHTML = html;
     bindStatic();
+    initEffects();
   }
 
   /* no white screens, ever: any render error → front page */
@@ -129,6 +130,7 @@
         if (location.pathname !== '/') history.replaceState({}, '', '/');
         $('#app').innerHTML = Landing();
         bindStatic();
+        initEffects();
       } catch (e2) { /* keep the boot text visible */ }
     }
   }
@@ -172,11 +174,14 @@
     msg.textContent = msgFor(kind, v);
     if (v && ok) {
       toast(kind === 'gh' ? '✓ GitHub link looks good — box checked' : '✓ LinkedIn link looks good — box checked');
-      const box = $('#prog-' + (kind === 'gh' ? 'gh' : 'li'));
-      if (box) {
-        box.classList.add('done');
-        box.querySelector('.dot').textContent = ICONS.check;
-      }
+      const ids = kind === 'gh' ? ['prog-gh', 'prog-build'] : ['prog-li'];
+      ids.forEach((id) => {
+        const box = $('#' + id);
+        if (box) {
+          box.classList.add('done');
+          box.querySelector('.dot').textContent = ICONS.check;
+        }
+      });
     }
     updateStrength();
     return ok;
@@ -229,7 +234,7 @@
   function confettiBurst() {
     const c = document.createElement('div');
     c.className = 'confetti';
-    const colors = ['#FF9B45', '#FF6B63', '#22C98A', '#F2F0E9', '#C7402F'];
+    const colors = ['#8B5CF6', '#A855F7', '#6366F1', '#22D3EE', '#6D28D9', '#F5F3FF'];
     for (let i = 0; i < 28; i++) {
       const s = document.createElement('i');
       s.style.left = Math.random() * 100 + '%';
@@ -252,7 +257,7 @@
       <div class="land-hero">
         <span class="chip chip-hot">${ICONS.flame} 60-day challenge · free for students</span>
         <h1 style="margin-top:14px">Build every day.<br/><span class="hot">Prove it publicly.</span></h1>
-        <p>ABTalks 60 is a daily coding challenge for Indian college students — ship one project a day and keep a public streak of GitHub commits and LinkedIn posts that recruiters actually open.</p>
+        <p>ABTalks is a daily coding challenge for Indian college students — ship one project a day and keep a public streak of GitHub commits and LinkedIn posts that recruiters actually open.</p>
       </div>
       <div class="land-stats">
         <div class="stat"><b>12,000+</b><span>shippers</span></div>
@@ -373,7 +378,7 @@
 
     const mission = `<section class="sec">
       <h3 class="sec-title">Your Mission</h3>
-      <div class="card"><ul class="check-list">
+      <div class="card"><ul class="check-list mission">
         ${c.requirements.map((r) => `<li><span class="dot">${ICONS.check}</span><span>${r}</span></li>`).join('')}
       </ul></div>
     </section>`;
@@ -403,9 +408,9 @@
 
     const progress = `<section class="sec" id="progress-sec">
       <h3 class="sec-title">Today's Progress</h3>
-      <div class="card"><ul class="check-list">
+      <div class="card"><ul class="check-list mission">
         <li class="done"><span class="dot">${ICONS.check}</span><span>Understand challenge</span></li>
-        <li class="${completed ? 'done' : 'cur'}"><span class="dot">${completed ? ICONS.check : ICONS.arrow}</span><span>Build project</span></li>
+        <li id="prog-build" class="${ghOK ? 'done' : 'cur'}"><span class="dot">${ghOK ? ICONS.check : ''}</span><span>Build project</span></li>
         <li id="prog-gh" class="${ghOK ? 'done' : ''}"><span class="dot">${ghOK ? ICONS.check : ''}</span><span>Push to GitHub</span></li>
         <li id="prog-li" class="${liOK ? 'done' : ''}"><span class="dot">${liOK ? ICONS.check : ''}</span><span>Share on LinkedIn</span></li>
       </ul></div>
@@ -515,6 +520,53 @@
       $('#app').innerHTML = Landing();
       bindStatic();
     } catch (e) { /* nothing else to try */ }
+  });
+
+    /* ================= 3D / motion effects ================= */
+  let curTilt = null;
+  function initEffects() {
+    /* 3D tilt on every block (top-level blocks only — nested ones stay flat
+       so parent and child transforms never fight and text never shimmers) */
+    document.querySelectorAll('.card, .hero-card, .progress-card, .today-card, .stat, .mini, .ach, .day-streak, .banner, .strength-card, .heat, .app-header .back, .avatar, .streak-pill').forEach((el) => {
+      el.setAttribute('data-tilt', '');
+    });
+
+    /* scroll reveal */
+    const els = document.querySelectorAll('.day > section, .landing > .card, .landing > .sec, .landing > .land-cta, .land-stats, .land-hero, .dash > *');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach((x) => {
+        if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); }
+      }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      els.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 5) * 45 + 'ms';
+        io.observe(el);
+      });
+      setTimeout(() => els.forEach((el) => el.classList.add('in')), 1600);
+      setTimeout(() => els.forEach((el) => { el.style.transitionDelay = ''; }), 2600);
+    } else {
+      els.forEach((el) => el.classList.add('in'));
+    }
+
+    /* page transition */
+    const app = $('#app');
+    app.classList.remove('page-in');
+    void app.offsetWidth;
+    app.classList.add('page-in');
+  }
+
+  /* delegated tilt: one mousemove, no per-element listeners */
+  document.addEventListener('mousemove', (e) => {
+    const t = e.target.closest('[data-tilt]');
+    if (t !== curTilt) { if (curTilt) curTilt.style.transform = ''; curTilt = t; }
+    if (!t) return;
+    const r = t.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    t.style.transform = `perspective(700px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-3px)`;
+  });
+  document.addEventListener('mouseleave', () => {
+    if (curTilt) { curTilt.style.transform = ''; curTilt = null; }
   });
 
   safeRender();
