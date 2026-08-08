@@ -152,7 +152,7 @@ export default function App() {
             <TodayTask task={scene.today} streak={scene.streak} {...handlers} />
           </Tilt3D>
           <Tilt3D>
-            <OverallProgress completed={scene.completedDays} total={60} today={scene.today.day} />
+            <OverallProgress completed={scene.streak.current} total={60} today={scene.today.day} />
           </Tilt3D>
         </div>
 

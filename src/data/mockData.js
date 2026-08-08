@@ -97,7 +97,7 @@ export const ACHIEVEMENTS = [
   { id: 'microservice-master', name: 'Microservice Master', icon: '🧩', desc: 'Small services, big systems.', howto: 'Complete 3 microservice challenges.', rarity: 'epic', unlocked: false, day: 35 },
   { id: 'ssr-sage', name: 'SSR Sage', icon: '🖥️', desc: 'Server-rendered mastery.', howto: 'Complete 3 server-side rendering challenges.', rarity: 'epic', unlocked: false, day: 36 },
   { id: 'performance-pro', name: 'Performance Pro', icon: '📈', desc: 'Fast by design.', howto: 'Complete 3 performance optimization challenges.', rarity: 'epic', unlocked: false, day: 38 },
-  { id: 'api-master', name: 'API Master', icon: '🛰️', desc: '5 API challenges shipped.', howto: 'Complete 5 challenges from the API track.', rarity: 'legendary', unlocked: false, day: 25 },
+  { id: 'api-master', name: 'API Master', icon: '🛰️', desc: '5 API challenges shipped.', howto: 'Complete 5 challenges from the API track.', rarity: 'legendary', unlocked: true, day: 25 },
   { id: 'consistency-king', name: 'Consistency King', icon: '👑', desc: 'A month of non-stop shipping.', howto: 'Reach a 30-day streak.', rarity: 'legendary', unlocked: false, day: 30 },
   { id: 'community-captain', name: 'Community Captain', icon: '🌍', desc: 'Helped five students.', howto: 'Help or review 5 students in the community.', rarity: 'legendary', unlocked: false, day: 37 },
   { id: 'open-source-hero', name: 'Open Source Hero', icon: '🤝', desc: 'PR merged on a real project.', howto: 'Get a pull request merged on an open-source repo.', rarity: 'legendary', unlocked: false, day: 39 },
@@ -108,11 +108,11 @@ export const ACHIEVEMENTS = [
   { id: 'mentor-mode', name: 'Mentor Mode', icon: '🧑‍🏫', desc: 'Reviewed five PRs.', howto: 'Review 5 of your peers submissions.', rarity: 'legendary', unlocked: false, day: 49 },
   { id: 'legacy-lap', name: 'Legacy Lap', icon: '🏛️', desc: 'Maintained for two weeks.', howto: 'Keep a project maintained for 2 straight weeks.', rarity: 'legendary', unlocked: false, day: 50 },
   { id: 'finisher', name: '60-Day Finisher', icon: '🏆', desc: 'Complete the full ABTalks 60 journey.', howto: 'Ship all 60 daily challenges.', rarity: 'mythic', unlocked: false, day: 60 },
-  { id: 'century-club', name: 'Century Club', icon: '💯', desc: 'A hundred commits shipped.', howto: 'Reach 100 total commits across your challenges.', rarity: 'mythic', unlocked: false, day: 0 },
+  { id: 'century-club', name: 'Century Club', icon: '💯', desc: 'A hundred commits shipped.', howto: 'Reach 100 total commits across your challenges.', rarity: 'mythic', unlocked: true, day: 0 },
   { id: 'iron-streak', name: 'Iron Streak', icon: '⚔️', desc: 'Fifty days unbroken.', howto: 'Reach a 50-day streak.', rarity: 'mythic', unlocked: false, day: 50 },
   { id: 'ultimate-shipmaster', name: 'Ultimate Shipmaster', icon: '🚢', desc: 'Three perfect ships in a day.', howto: 'Ship 3 challenges in one day with perfect quality.', rarity: 'mythic', unlocked: false, day: 0 },
   { id: 'untouchable', name: 'Untouchable', icon: '💠', desc: 'A perfect month.', howto: 'Finish a full month without missing a single day.', rarity: 'mythic', unlocked: false, day: 0 },
-  { id: 'bug-bash', name: 'Bug Bash', icon: '🐛', desc: 'Ship 3 challenges during the Bug Bash weekend.', howto: 'Submit any 3 challenges while the Bug Bash event is live.', rarity: 'epic', unlocked: false, day: 0, event: true, eventEnds: 'Aug 16' },
+  { id: 'bug-bash', name: 'Bug Bash', icon: '🐛', desc: 'Ship 3 challenges during the Bug Bash weekend.', howto: 'Submit any 3 challenges while the Bug Bash event is live.', rarity: 'epic', unlocked: true, day: 0, event: true, eventEnds: 'Aug 16' },
   { id: 'moon-marathon', name: 'Moonlight Marathon', icon: '🌙', desc: 'Ship 5 nights in a row during the Moonlight Marathon.', howto: 'Submit a challenge every night while the event is live.', rarity: 'legendary', unlocked: false, day: 0, event: true, eventEnds: 'Aug 31' },
   { id: 'ghost-ship', name: 'Ghost Ship', icon: '👻', desc: 'Complete a challenge on Halloween night.', howto: 'Submit any challenge on Oct 31 between 6 PM and midnight.', rarity: 'mythic', unlocked: false, day: 0, event: true, eventEnds: 'Oct 31' },
   { id: 'new-year-sprint', name: 'New Year Sprint', icon: '🎆', desc: 'Five ships in the first week of the year.', howto: 'Submit 5 challenges between Jan 1 and Jan 7.', rarity: 'epic', unlocked: false, day: 0, event: true, eventEnds: 'Jan 7' },
@@ -257,7 +257,7 @@ export const SCENES = {
     label: 'Missed days',
     user: { ...USER },
     streak: { current: 11, longest: 18, isActive: true, missedYesterday: false, missedCount: 4 },
-    today: { ...TODAY_TASK, day: 23, title: 'Realtime Chat App', category: 'Full-Stack · WebSockets', time: '60 min', tech: ['Socket.IO', 'React'], status: 'submitted' },
+    today: { ...TODAY_TASK, title: 'Realtime Chat App', category: 'Full-Stack · WebSockets', time: '60 min', tech: ['Socket.IO', 'React'], status: 'submitted' },
     calendar: buildCalendar().map((d) => {
       if (d.day >= 9 && d.day <= 12)
         return { ...d, completed: false, submitted: false, missed: true, github: null, linkedin: null, xp: 0 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, X, Sparkles, Medal } from 'lucide-react'
+import { X, Sparkles, Medal } from 'lucide-react'
 import { ACHIEVEMENTS } from '../data/mockData'
 
 const RARITY = {
@@ -11,6 +11,24 @@ const RARITY = {
 }
 const RARITY_ORDER = { rare: 1, epic: 2, legendary: 3, mythic: 4 }
 
+const RARITY_SHINE = {
+  rare: { '--glow': '#a78bfa' },
+  epic: { '--shine': 'rgba(168, 85, 247, 0.65)', '--glow': '#a855f7', '--spark': 'linear-gradient(135deg,#a855f7,#7c3aed)' },
+  legendary: { '--shine': 'rgba(253, 224, 71, 0.55)', '--glow': '#fde047', '--spark': 'linear-gradient(135deg,#fde047,#facc15)' },
+  mythic: { '--shine': 'rgba(251, 113, 133, 0.55)', '--glow': '#fb7185', '--spark': 'linear-gradient(135deg,#fb7185,#f87171)' },
+}
+
+const dayLabel = (b) =>
+  b.event
+    ? `⏳ ${b.unlocked ? 'Earned' : `ends ${b.eventEnds}`}`
+    : b.unlocked
+      ? b.day
+        ? `Unlocked Day ${b.day}`
+        : 'Unlocked · secret milestone'
+      : b.day
+        ? `Day ${b.day}`
+        : 'Secret unlock'
+
 const sortByRarity = (arr) => [...arr].sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity])
 
 export default function AchievementsPage() {
@@ -18,7 +36,14 @@ export default function AchievementsPage() {
   const locked = sortByRarity(ACHIEVEMENTS.filter((b) => !b.unlocked))
   const events = locked.filter((b) => b.event)
   const regularLocked = locked.filter((b) => !b.event)
-  const [sel, setSel] = useState(null)
+  const [pop, setPop] = useState(null)
+
+  const openPop = (e, b) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const x = r.left + r.width / 2
+    const y = r.bottom + 10
+    setPop({ b, x, y, flip: y > window.innerHeight - 340 })
+  }
 
   const BadgeCard = ({ b }) => (
     <motion.button
@@ -31,9 +56,11 @@ export default function AchievementsPage() {
         background: b.unlocked
           ? `linear-gradient(170deg, ${RARITY[b.rarity].color}22, var(--surface))`
           : undefined,
+        ...(b.unlocked && !b.event ? RARITY_SHINE[b.rarity] : {}),
       }}
+      {...(b.event ? { 'data-event': '1' } : {})}
       whileTap={{ scale: 0.94 }}
-      onClick={() => setSel(b)}
+      onClick={(e) => openPop(e, b)}
     >
       {b.unlocked && <span className="spark">✦</span>}
       {b.event && <span className="badge-event-tag">⚡</span>}
@@ -42,19 +69,7 @@ export default function AchievementsPage() {
       <div className="b-rarity" style={{ color: RARITY[b.rarity].color }}>
         {RARITY[b.rarity].label}
       </div>
-      <div className="b-day">
-        {b.event ? (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-            ⏳ {b.unlocked ? 'Earned' : `ends ${b.eventEnds}`}
-          </span>
-        ) : b.unlocked ? (
-          `Unlocked Day ${b.day}`
-        ) : b.day ? (
-          `Day ${b.day}`
-        ) : (
-          'Secret unlock'
-        )}
-      </div>
+      <div className="b-day">{dayLabel(b)}</div>
     </motion.button>
   )
 
@@ -98,64 +113,6 @@ export default function AchievementsPage() {
           ))}
         </div>
 
-        <AnimatePresence>
-          {sel && (
-            <motion.div
-              key={sel.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              style={{ overflow: 'hidden' }}
-            >
-              <div className="badge-detail" style={{ borderColor: `${RARITY[sel.rarity].color}55` }}>
-                <div className="bd-top">
-                  <span
-                    className="bd-ic"
-                    style={{ boxShadow: `0 0 28px -4px ${RARITY[sel.rarity].color}`, borderColor: `${RARITY[sel.rarity].color}88` }}
-                  >
-                    {sel.icon}
-                  </span>
-                  <div className="bd-head">
-                    <div className="bd-name">{sel.name}</div>
-                    <div className="bd-tags">
-                      <span className="bd-rarity" style={{ color: RARITY[sel.rarity].color, borderColor: `${RARITY[sel.rarity].color}66` }}>
-                        {RARITY[sel.rarity].label}
-                      </span>
-                      {sel.event && (
-                        <span className="bd-event" style={{ color: '#22d3ee', borderColor: 'rgba(34,211,238,0.5)' }}>
-                          ⚡ Limited event
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <button className="bd-close" onClick={() => setSel(null)} aria-label="Close">
-                    <X size={14} />
-                  </button>
-                </div>
-
-                <p className="bd-desc">{sel.desc}</p>
-
-                <div className="bd-howto">
-                  <Sparkles size={13} style={{ color: RARITY[sel.rarity].color, flexShrink: 0 }} />
-                  <span>
-                    <b>How to earn:</b> {sel.howto}
-                  </span>
-                </div>
-
-                <div className="bd-status" style={{ color: sel.unlocked ? 'var(--mint)' : sel.event ? '#22d3ee' : 'var(--text-faint)' }}>
-                  {sel.unlocked
-                    ? `✓ Earned · Day ${sel.day}`
-                    : sel.event
-                      ? `⏳ Limited time · ends ${sel.eventEnds}`
-                      : sel.day
-                        ? `🔒 Locked · unlocks at Day ${sel.day}`
-                        : '🔒 Secret · unlock condition hidden'}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         <div className="badge-legend">
           {Object.values(RARITY).map((r) => (
             <span key={r.label} className="badge-legend-item">
@@ -169,6 +126,81 @@ export default function AchievementsPage() {
           </span>
         </div>
       </div>
+
+      <AnimatePresence>
+        {pop && (
+          <>
+            <motion.div
+              key="bd-mask"
+              className="bd-pop-mask"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPop(null)}
+            />
+            <motion.div
+              key={pop.b.id}
+              className="bd-pop"
+              style={{
+                left: Math.max(10, Math.min(pop.x, window.innerWidth - 290)),
+                top: pop.flip ? pop.y - 360 : pop.y,
+                borderColor: `${RARITY[pop.b.rarity].color}55`,
+              }}
+              initial={{ opacity: 0, scale: 0.92, y: pop.flip ? 6 : -6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: pop.flip ? 4 : -4 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bd-top">
+                <span
+                  className="bd-ic"
+                  style={{ boxShadow: `0 0 28px -4px ${RARITY[pop.b.rarity].color}`, borderColor: `${RARITY[pop.b.rarity].color}88` }}
+                >
+                  {pop.b.icon}
+                </span>
+                <div className="bd-head">
+                  <div className="bd-name">{pop.b.name}</div>
+                  <div className="bd-tags">
+                    <span className="bd-rarity" style={{ color: RARITY[pop.b.rarity].color, borderColor: `${RARITY[pop.b.rarity].color}66` }}>
+                      {RARITY[pop.b.rarity].label}
+                    </span>
+                    {pop.b.event && (
+                      <span className="bd-event" style={{ color: '#22d3ee', borderColor: 'rgba(34,211,238,0.5)' }}>
+                        ⚡ Limited event
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <button className="bd-close" onClick={() => setPop(null)} aria-label="Close">
+                  <X size={14} />
+                </button>
+              </div>
+
+              <p className="bd-desc">{pop.b.desc}</p>
+
+              <div className="bd-howto">
+                <Sparkles size={13} style={{ color: RARITY[pop.b.rarity].color, flexShrink: 0 }} />
+                <span>
+                  <b>How to earn:</b> {pop.b.howto}
+                </span>
+              </div>
+
+              <div className="bd-status" style={{ color: pop.b.unlocked ? 'var(--mint)' : pop.b.event ? '#22d3ee' : 'var(--text-faint)' }}>
+                {pop.b.unlocked
+                  ? pop.b.day
+                    ? `✓ Earned · Day ${pop.b.day}`
+                    : '✓ Earned · secret milestone'
+                  : pop.b.event
+                    ? `⏳ Limited time · ends ${pop.b.eventEnds}`
+                    : pop.b.day
+                      ? `🔒 Locked · unlocks at Day ${pop.b.day}`
+                      : '🔒 Secret · unlock condition hidden'}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
