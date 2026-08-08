@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Home, LayoutDashboard, ListChecks, Award } from 'lucide-react'
 
@@ -9,24 +8,22 @@ const ITEMS = [
   { id: 'achievements', label: 'Achievements', Icon: Award },
 ]
 
-export default function BottomNav({ active = 'dashboard' }) {
-  const [current, setCurrent] = useState(active)
-
+export default function BottomNav({ active = 'dashboard', onChange }) {
   return (
     <nav className="nav">
       <div className="nav-inner">
         {ITEMS.map(({ id, label, Icon }) => (
           <button
             key={id}
-            className={`nav-item ${current === id ? 'active' : ''}`}
-            onClick={() => setCurrent(id)}
+            className={`nav-item ${active === id ? 'active' : ''}`}
+            onClick={() => onChange?.(id)}
           >
             <motion.span className="svg" whileTap={{ scale: 0.85 }}>
-              <Icon size={20} strokeWidth={current === id ? 2.4 : 2} />
+              <Icon size={20} strokeWidth={active === id ? 2.4 : 2} />
               {id === 'challenges' && <span className="nav-dot" />}
             </motion.span>
             {label}
-            {current === id && (
+            {active === id && (
               <motion.span
                 layoutId="nav-glow"
                 style={{

@@ -14,9 +14,11 @@ import Community from './components/Community'
 import BottomNav from './components/BottomNav'
 import DaySheet from './components/DaySheet'
 import Tilt3D from './components/Tilt3D'
+import AchievementsPage from './components/AchievementsPage'
 import { SCENES, QUOTES, COMMUNITY } from './data/mockData'
 
 export default function App() {
+  const [page, setPage] = useState('dashboard')
   const [sceneKey, setSceneKey] = useState('day-12')
   const [scene, setScene] = useState(SCENES['day-12'])
   const [sheetDay, setSheetDay] = useState(null)
@@ -33,6 +35,10 @@ export default function App() {
     setScene(SCENES[key])
     setToast(null)
   }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [page])
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 350)
@@ -106,6 +112,16 @@ export default function App() {
         onTouchEnd={onTouchEnd}
         key={refreshKey}
       >
+        {page === 'achievements' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28 }}
+          >
+            <AchievementsPage />
+          </motion.div>
+        ) : (
+        <>
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 14 }}
@@ -166,9 +182,11 @@ export default function App() {
         >
           ABTalks 60 · {scene.completedDays}/60 days shipped
         </motion.p>
+        </>
+        )}
       </div>
 
-      <BottomNav />
+      <BottomNav active={page} onChange={setPage} />
 
       <AnimatePresence>
         {sheetDay && (
