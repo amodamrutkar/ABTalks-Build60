@@ -1,1 +1,75 @@
-# ABTalks-Build60
+# ABTalks — 60-Day Coding Challenge
+> Build. Commit. Grow.
+
+
+## Overview
+ABTalks is a 60-day coding challenge platform designed for college students to build projects consistently, document their progress, and create visible proof of their learning through GitHub and LinkedIn.
+
+## Problem Statement
+Students often struggle to maintain consistency while learning development. ABTalks-Build60 encourages students to build something every day for 60 days while maintaining a public learning streak through GitHub commits and LinkedIn posts.
+
+
+## Solution
+The redesigned ABTalks experience provides a mobile-first interface that guides students through their 60-day journey with visual progress tracking, daily tasks, proof-of-work submissions, andmotivational feedback.
+
+## Features
+
+- 60-day coding journey
+- Daily challenge tracking
+- GitHub proof-of-work submission
+- LinkedIn proof-of-work submission
+- Streak tracking
+- Progress visualization
+- Student achievements
+- Mobile-first interface
+- Interactive journey experience
+
+## Screenshots
+
+### Landing Page
+![Landing Page](./screenshots/landing-page.png)
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Challenge Day
+![Challenge Day](./screenshots/challenge-day.png)
+
+## Usage
+
+1. Open the landing page.
+2. Select "Start My Journey".
+3. Choose a coding track.
+4. Complete the daily challenge.
+5. Submit your GitHub commit.
+6. Submit your LinkedIn post.
+7. Track your progress through the 60-day journey.
+
+## Live Demo
+
+## Design Decisions
+
+### Mobile First
+The platform is designed primarily for a 390px mobile viewport because students are expected to use the platform on their phones, often after college.
+
+### 60-Day Journey
+The challenge is represented as a visual journey rather than simply displaying a progress percentage. This makes long-term progress feel tangible and encourages students to continue.
+
+### Proof of Work
+GitHub and LinkedIn submissions are integrated into the daily experience so that consistency produces visible career evidence.
+
+## Tech Stack
+
+## Project Structure
+
+## Future Improvements
+
+- Real authentication
+- GitHub API integration
+- LinkedIn integration
+- Real-time streak tracking
+- Notifications
+- Personalized learning paths
+- Production database
+
+## Team
