@@ -64,6 +64,63 @@ GitHub and LinkedIn submissions are integrated into the daily experience so that
 
 ## Project Structure
 
+```text
+src/
+│
+├── App.jsx
+├── main.jsx
+├── index.css
+│
+├── pages/
+│   ├── LandingPage.jsx
+│   ├── AboutChallengePage.jsx
+│   ├── DashboardPage.jsx
+│   └── ChallengeDayPage.jsx
+│
+├── components/
+│   ├── landing/
+│   │   ├── IntroAnimation.jsx
+│   │   ├── Hero.jsx
+│   │   ├── JourneySection.jsx
+│   │   ├── PerksSection.jsx
+│   │   ├── ReviewsSection.jsx
+│   │   └── CTASection.jsx
+│   │
+│   ├── dashboard/
+│   │   ├── DashboardHeader.jsx
+│   │   ├── ProgressCard.jsx
+│   │   ├── CurrentChallenge.jsx
+│   │   ├── JourneyProgress.jsx
+│   │   └── AchievementCard.jsx
+│   │
+│   └── challenge/
+│       ├── ChallengeHeader.jsx
+│       ├── ChallengeContent.jsx
+│       ├── SubmissionPanel.jsx
+│       └── DayNavigation.jsx
+│
+├── data/
+│   ├── challenges.js
+│   ├── achievements.js
+│   ├── reviews.js
+│   └── student.js
+│
+├── hooks/
+│   ├── useProgress.js
+│   └── useChallenge.js
+│
+├── services/
+│   └── mockApi.js
+│
+├── utils/
+│   ├── validation.js
+│   └── storage.js
+│
+└── assets/
+    ├── images/
+    └── icons/
+```
+
 ## Future Improvements
 
 - Real authentication
