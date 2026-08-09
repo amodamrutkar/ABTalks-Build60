@@ -30,10 +30,12 @@ The redesigned ABTalks experience provides a mobile-first interface that guides 
 ![Landing Page](./screenshots/landing-page.png)
 
 ### Dashboard
-![Dashboard](./screenshots/dashboard.png)
+<img width="550" height="700" alt="Dashboard" src="https://github.com/user-attachments/assets/6406ba81-58d7-40d1-8540-ffd73ade901b" />
+
 
 ### Challenge Day
-![Challenge Day](./screenshots/challenge-day.png)
+<img width="550" height="700" alt="Screenshot 2026-08-09 173450" src="https://github.com/user-attachments/assets/d25bbab6-4d54-48f4-adcc-cce864f916d4" />
+
 
 ## Usage
 
@@ -73,3 +75,5 @@ GitHub and LinkedIn submissions are integrated into the daily experience so that
 - Production database
 
 ## Team
+Amod Amrutkar
+Siddesh Bhole
