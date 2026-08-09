@@ -62,6 +62,16 @@ GitHub and LinkedIn submissions are integrated into the daily experience so that
 
 ## Tech Stack
 
+| Category | Technology | Purpose |
+|---|---|---|
+| *Frontend* | React 19 | Component-based UI development |
+| *Build Tool* | Vite | Fast development server and production builds |
+| *Routing* | React Router DOM | Client-side routing for /, /dashboard, and /day/:day |
+| *Styling* | Vanilla CSS | Custom responsive styling with CSS variables |
+| *Icons* | Lucide React | Lightweight, consistent SVG icons |
+| *Animations* | Framer Motion | Page transitions, micro-interactions, and animations |
+| *Rendering* | React DOM | Rendering React components to the browser |
+
 ## Project Structure / Route Map
 
 ```text
