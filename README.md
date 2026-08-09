@@ -48,8 +48,6 @@ The redesigned ABTalks experience provides a mobile-first interface that guides 
 6. Submit your LinkedIn post.
 7. Track your progress through the 60-day journey.
 
-## Live Demo
-
 ## Design Decisions
 
 ### Mobile First
