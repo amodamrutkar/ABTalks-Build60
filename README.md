@@ -62,7 +62,7 @@ GitHub and LinkedIn submissions are integrated into the daily experience so that
 
 ## Tech Stack
 
-## Project Structure
+## Project Structure / Route Map
 
 ```text
 src/
