@@ -27,7 +27,8 @@ The redesigned ABTalks experience provides a mobile-first interface that guides 
 ## Screenshots
 
 ### Landing Page
-![Landing Page](./screenshots/landing-page.png)
+<img width="550" height="700" alt="Screenshot 2026-08-09 194442" src="https://github.com/user-attachments/assets/27cc50f5-a898-4aac-819f-131e6651e185" />
+
 
 ### Dashboard
 <img width="550" height="700" alt="Dashboard" src="https://github.com/user-attachments/assets/6406ba81-58d7-40d1-8540-ffd73ade901b" />
