@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { Clock, Target, Layers, ArrowRight, CheckCheck } from 'lucide-react'
 
-export default function TodayTask({ task, streak, onToast }) {
+export default function TodayTask({ task, streak }) {
+  const navigate = useNavigate()
   const done = task.status === 'submitted'
-  const doneLabel = done ? 'Submitted · +150 XP earned' : ''
 
   return (
     <section className="card">
@@ -39,7 +40,7 @@ export default function TodayTask({ task, streak, onToast }) {
       <motion.button
         className={`task-btn ${done ? 'done' : ''}`}
         whileTap={{ scale: 0.98 }}
-        onClick={() => onToast(done ? doneLabel : `Opening Day ${task.day} →`)}
+        onClick={() => navigate('/challenge')}
       >
         {done ? 'Day complete — nice work' : 'Continue challenge'}
         <span className="arrow">{done ? <CheckCheck size={17} /> : <ArrowRight size={17} />}</span>
