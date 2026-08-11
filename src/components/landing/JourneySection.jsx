@@ -11,8 +11,9 @@ const STAGES = [
 ]
 
 const WINDOW = 0.62 // how far (in progress units) a card travels while entering/exiting
-const CORE = 0.16 // progress window around the center where the card stays fully visible
+const SATURATE = 0.22 // progress distance at which a card reaches its dimmed floor
 const DRIFT = 96 // px the card drifts from its true position during entry/exit
+const ENTER = 0.08 // progress window for the initial Day-1 pop-in
 
 const easeInOut = (t) => {
   const x = Math.max(0, Math.min(1, t))
@@ -23,30 +24,42 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
 
 function JourneyCard({ s, i, total, progress }) {
   const c = i / (total - 1)
+  const isFirst = c === 0
 
   const opacity = useTransform(progress, (p) => {
-    const z = Math.abs(p - c)
-    if (z >= WINDOW) return 0
-    if (z <= CORE) return 1
-    return easeInOut((WINDOW - z) / (WINDOW - CORE))
+    const z = easeInOut(clamp(Math.abs(p - c) / SATURATE, 0, 1))
+    const base = 1 - 0.7 * z
+    if (!isFirst) return base
+    const enter = easeInOut(clamp(p / ENTER, 0, 1))
+    return base * (0.7 + 0.3 * enter)
   })
 
   const x = useTransform(progress, (p) => -DRIFT * clamp((p - c) / WINDOW, -1, 1))
 
+  const y = useTransform(progress, (p) =>
+    isFirst ? 14 * (1 - easeInOut(clamp(p / ENTER, 0, 1))) : 0
+  )
+
   const scale = useTransform(progress, (p) => {
-    const z = Math.abs(p - c)
-    return 1 + 0.02 * Math.max(0, 1 - z / 0.25)
+    const z = easeInOut(clamp(Math.abs(p - c) / SATURATE, 0, 1))
+    const base = 1.035 - 0.04 * z
+    if (!isFirst) return base
+    const enter = easeInOut(clamp(p / ENTER, 0, 1))
+    return base * (0.94 + 0.06 * enter)
   })
 
   const glow = useTransform(progress, (p) => {
-    const z = Math.abs(p - c)
-    return 0.55 + 0.45 * Math.max(0, 1 - z / 0.25)
+    const z = easeInOut(clamp(Math.abs(p - c) / SATURATE, 0, 1))
+    const base = 1 - 0.55 * z
+    if (!isFirst) return base
+    const enter = easeInOut(clamp(p / ENTER, 0, 1))
+    return base * (0.75 + 0.25 * enter)
   })
 
   return (
     <motion.div
       className="jcard"
-      style={{ '--jc': s.color, '--jglow': glow, opacity, x, scale }}
+      style={{ '--jc': s.color, '--jglow': glow, opacity, x, y, scale }}
     >
       <div className="jcard-top">
         <span className="jcard-range" style={{ color: s.color }}>
@@ -75,6 +88,7 @@ export default function JourneySection() {
   const trackRef = useRef(null)
   const stageRef = useRef(null)
   const [travel, setTravel] = useState(0)
+  const [pad, setPad] = useState(0)
   const [idx, setIdx] = useState(1)
 
   const { scrollYProgress } = useScroll({ target: wrapRef })
@@ -86,8 +100,21 @@ export default function JourneySection() {
 
   useEffect(() => {
     const measure = () => {
-      if (!trackRef.current || !stageRef.current) return
-      setTravel(Math.max(0, trackRef.current.scrollWidth - stageRef.current.clientWidth))
+      const track = trackRef.current
+      const stage = stageRef.current
+      if (!track || !stage) return
+      const card = track.querySelector('.jcard')
+      if (!card) return
+
+      const cardWidth = card.offsetWidth
+      const stageWidth = stage.clientWidth
+      const sidePadding = Math.max(0, (stageWidth - cardWidth) / 2)
+      const gap = parseFloat(getComputedStyle(track).gap) || 18
+
+      track.style.setProperty('--jpad', `${sidePadding}px`)
+      setPad(sidePadding)
+      const trackWidth = 2 * sidePadding + STAGES.length * cardWidth + (STAGES.length - 1) * gap
+      setTravel(Math.max(0, trackWidth - stageWidth))
     }
     measure()
     window.addEventListener('resize', measure)
@@ -104,7 +131,7 @@ export default function JourneySection() {
         <p className="jrn-sub">Keep scrolling — the story moves with you.</p>
 
         <div className="jrn-strip">
-          <motion.div className="jrn-track" ref={trackRef} style={{ x }}>
+          <motion.div className="jrn-track" ref={trackRef} style={{ x, '--jpad': `${pad}px` }}>
             {STAGES.map((s, i) => (
               <JourneyCard
                 key={s.range}
